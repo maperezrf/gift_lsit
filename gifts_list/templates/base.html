@@ -17,46 +17,45 @@
             <h1 class="card-title text-center my-4 fw-semibold">🎁 Lista de regalos</h1>
             <div class="card-body">
               <div class="list-group regalos-scroll listado-contenido">
-                {% for gift in gifts %}
+                {% for gift in gifts_to_reserve %}
                   <div class="card mb-3 shadow-sm">
                     <div class="row g-0 align-items-center">
                       <!-- ICONOS -->
                       <div class="col-md-4 text-center p-3">
                         <img src="{% static 'images/' %}{{ gift.image_name }}.png" class="img-fluid" style="max-height: 80px;" alt="{{ gift.name }}" />
                       </div>
-
                       <!-- TEXTO + BOTÓN -->
                       <div class="col-md-8">
                         <div class="card-body">
                           <div class="d-flex align-items-center justify-content-between">
                             <p class="mb-0 fw-semibold">{{ gift.name }}</p>
-
-                            <button class="btn rounded-pill px-3 text-white" style="background-color:#F6A623;">Seleccionar</button>
+                            <button id="{{ gift.id }}" class="btn-seleccionar btn rounded-pill px-3 text-white" style="background-color:#F6A623;">Seleccionar</button>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 {% endfor %}
-                {% comment %} {% for gift in gifts %}
-                  <div class="card mb-3 shadow-sm" style="max-width: 100%;">
-                    <div class="col-md-4">
-                      <img src="{% static 'images/' %}{{ gift.image_name }}.png" class="img-fluid rounded-start" alt="..." />
-                    </div>
-                    <div class="row g-0">
-                      <div class="col-12 d-flex">
-                        <div class="w-100">
-                          <div class="card-body">
-                            <div class="d-flex align-items-center">
-                              <p class="mb-0 me-3 flex-grow-1">{{ gift.name }}</p>
-                              <button class="btn rounded-pill px-3 text-white" style="background-color:#F6A623;">Seleccionar</button>
-                            </div>
+                <h3 class="text-center mb-3">Regalos reservados</h3>
+                {% for gift in reserved_gifts %}
+                  <div class="card mb-3 shadow-sm">
+                    <div class="row g-0 align-items-center">
+                      <!-- ICONOS -->
+                      <div class="col-md-4 text-center p-3">
+                        <img src="{% static 'images/' %}{{ gift.image_name }}.png" class="img-fluid" style="max-height: 80px;" alt="{{ gift.name }}" />
+                      </div>
+                      <!-- TEXTO + BOTÓN -->
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <div class="d-flex align-items-center justify-content-between">
+                            <p class="mb-0 fw-semibold">{{ gift.name }}</p>
+                            <button id="{{ gift.id }}" class="btn-seleccionar btn rounded-pill px-3 text-white" style="background-color:#f62323;pointer-events: none;">Reservado</button>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                {% endfor %} {% endcomment %}
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -67,5 +66,10 @@
     {% block content %}
 
     {% endblock %}
+    <script>
+      const csrftoken = '{{ csrf_token }}'
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'js/base.js' %}"></script>
   </body>
 </html>
