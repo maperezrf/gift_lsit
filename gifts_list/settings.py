@@ -32,7 +32,7 @@ print(DEBUG)
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://giftlsit-babyshower.up.railway.app",
+    "https://giftlsit-babyshower.up.railway.app", 
 ]
 
 
