@@ -34,7 +34,6 @@ function show_confirmation(giftName, id) {
             autocapitalize: "off",
             autocorrect: "off"
         },
-        // Muestra un conta
         showCancelButton: true,
         confirmButtonText: 'Confirmar regalo',
         cancelButtonText: 'Volver',
@@ -58,12 +57,37 @@ function show_confirmation(giftName, id) {
                     id: id
                 })
             })
-                .then(response => {
-                    if (response.ok) {
-                        Swal.fire('¡Anotado!', `Gracias <strong>${nombrePersona}</strong>, el regalo ha sido reservado.`, 'success')
-                            .then(() => location.reload());
-                    }
-                });
+            .then(response => {
+                if (response.status === 200) {
+                    // Caso OK
+                    Swal.fire(
+                        '¡Anotado!',
+                        `Gracias <strong>${nombrePersona}</strong>, el regalo ha sido reservado.`,
+                        'success'
+                    ).then(() => location.reload());
+                } else if (response.status === 204) {
+                    // Caso regalo ya seleccionado
+                    Swal.fire(
+                        '¡Ups!',
+                        'Este regalo ya ha sido seleccionado por otra persona.',
+                        'warning'
+                    ).then(() => location.reload());
+                } else {
+                    // Otros errores
+                    Swal.fire(
+                        'Error',
+                        'Hubo un problema al intentar reservar el regalo. Intenta de nuevo.',
+                        'error'
+                    );
+                }
+            })
+            .catch(() => {
+                Swal.fire(
+                    'Error',
+                    'No se pudo conectar con el servidor. Intenta más tarde.',
+                    'error'
+                );
+            });
         }
     });
 }

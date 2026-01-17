@@ -13,13 +13,17 @@ def gifts_list(request):
         return render(request, "base.html", context)
     elif request.method == 'POST':
         try:
-            data = json.loads(request.body)
-            gift_obj = Gifts.objects.get(id=int(data['id']))
-            gift_obj.status = True
-            gift_obj.guest_name = data['persona'].lower()
-            gift_obj.save()
             data = {}
-            status = 200
+            data = json.loads(request.body)
+            gift_objs = Gifts.objects.filter(id=int(data['id']), status=False)
+            if gift_objs.exists():
+                gift_obj = gift_objs[0]
+                gift_obj.status = True
+                gift_obj.guest_name = data['persona'].lower()
+                gift_obj.save()
+                status = 200
+            else:
+                status=204
         except Exception as e:
             data = {"error": str(e)}
             status = 500
