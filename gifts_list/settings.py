@@ -31,6 +31,8 @@ print(DEBUG)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
+CSRF_TRUSTED_ORIGIN = config('CSRF_TRUSTED_ORIGIN', cast=Csv())
+
 
 # Application definition
 
