@@ -1,6 +1,6 @@
-// {
-//   "build": {
-//     "builder": "NIXPACKS",
-//     "buildCommand": "python manage.py collectstatic --noinput"
-//   }
-// }
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": ""
+  }
+}
